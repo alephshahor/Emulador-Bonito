@@ -1,5 +1,5 @@
 const WORD_SIZE = 32
-
+const N_REGISTERS = 43
 
 function or(a,b){
   return Number(a) || Number(b)
@@ -34,9 +34,6 @@ function not(a){
 function xpecialGate(a,b){
   return and(not(a),b)
 }
-
-
-
 
 class HalfAdder{
   constructor(){
@@ -129,6 +126,54 @@ class Alu{
 
 }
 
+class Cpu{
+
+  constructor(){
+    this.alu = new Alu()
+    this.programCounter = 0
+    this.registers = []
+    this.initializeRegisters()
+    this.instructionSet = {
+      DEC : {
+        regex: /DEC\s+R(\d+)/g,
+        execute(input, cpu){
+          let registerIndex = Number(this.regex.exec(input)[1])
+          let register = cpu.registers[registerIndex]
+          let registerValue  = cpu.alu.sub(register, decimalToBinary(1))
+          cpu.setRegister(registerIndex, registerValue)
+        }
+      }
+    }
+  }
+
+  setRegister(registerIndex, registerValue){
+    this.registers[registerIndex] = registerValue
+  }
+
+  initializeRegisters(){
+    for(var i = 0; i < N_REGISTERS; i++){
+      this.registers[i] = decimalToBinary(0)
+    }
+  }
+
+  processSubroutine(inputSubroutine){
+    let numberOfInstructions = inputSubroutine.length
+    while(this.programCounter < numberOfInstructions){
+      let currentInstruction = inputSubroutine[this.programCounter]
+      for(var instructionName in this.instructionSet){
+        let setInstruction = this.instructionSet[instructionName]
+        setInstruction.regex.lastIndex = 0
+        if(currentInstruction.match(setInstruction.regex)){
+           setInstruction.execute(currentInstruction, this)
+           break
+        }
+      }
+      this.programCounter += 1
+    }
+    // console.log(this.registers)
+  }
+
+}
 
 function decimalToBinary(decimalNumber){
   incompleteBinaryNumber = parseInt(decimalNumber, 10).toString(2)
@@ -145,6 +190,8 @@ function appendZeroes(incompleteBinaryNumber){
   return remainingZeroes + incompleteBinaryNumber
 }
 
+// cpu = new Cpu()
+// cpu.processSubroutine(["DEC R42"])
 
 
 module.exports = {
@@ -158,5 +205,6 @@ module.exports = {
   xpecialGate,
   HalfAdder,
   FullAdder,
-  Alu
+  Alu,
+  Cpu
 }

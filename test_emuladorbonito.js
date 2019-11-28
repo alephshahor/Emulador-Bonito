@@ -216,3 +216,25 @@ describe("Alu", function(){
     assert.equal(alu.sub("00000000000000000000000000000000","00000000000000000000000000000001"),"11111111111111111111111111111111")
   });
 });
+
+describe("CPU", function(){
+
+  it("Instruction DEC",function(){
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["DEC R00"])
+    assert.equal(cpu.registers[0], '11111111111111111111111111111111')
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["DEC R05"])
+    assert.equal(cpu.registers[5], '11111111111111111111111111111111')
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["DEC R40"])
+    assert.equal(cpu.registers[40], '11111111111111111111111111111111')
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["DEC R42"])
+    assert.equal(cpu.registers[42], '11111111111111111111111111111111')
+
+  });
+});
