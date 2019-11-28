@@ -302,6 +302,32 @@ describe("CPU", function(){
     assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
     assert.equal(cpu.registers[40], '11111111111111111111111111111111')
     assert.equal(cpu.registers[42], '11111111111111111111111111111111')
-  })
+  });
+
+  it("Instruction ADD", function(){
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["INV R01",
+                           "ADD R02, R01"])
+    // console.log(cpu.registers)
+    assert.equal(cpu.registers[1],  '11111111111111111111111111111111')
+    assert.equal(cpu.registers[2],  '11111111111111111111111111111111')
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.registers[2] = emuladorBonito.decimalToBinary(1560)
+    cpu.registers[3] = emuladorBonito.decimalToBinary(1345123)
+    cpu.registers[4] = emuladorBonito.decimalToBinary(9931234)
+    cpu.registers[6] = emuladorBonito.decimalToBinary(1)
+    cpu.processSubroutine(["ADD R02, R01",
+                           "ADD R03, R02",
+                           "ADD R04, R03",
+                           "INV R05",
+                           "DEC R05",
+                           "ADD R05, R06"])
+    assert.equal(cpu.registers[2],  '00000000000000000000011000011000')
+    assert.equal(cpu.registers[3],  '00000000000101001000110001111011')
+    assert.equal(cpu.registers[4],  '00000000101011000001011001011101')
+    assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
+
+  });
 
 });

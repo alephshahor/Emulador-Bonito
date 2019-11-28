@@ -189,7 +189,39 @@ class Cpu{
         execute(input, cpu){
 
         }
-      }
+      },
+
+      ADD : {
+        regex: /ADD\s+R(\d+)\s*,\s*R(\d+)/g,
+        execute(input, cpu){
+          let aRegisterIndex = Number(this.regex.exec(input)[1])
+
+          this.regex.lastIndex = 0
+          let bRegisterIndex = Number(this.regex.exec(input)[2])
+
+          let aRegisterValue = cpu.registers[aRegisterIndex]
+          let bRegisterValue = cpu.registers[bRegisterIndex]
+
+          let newRegisterValue = cpu.alu.add(aRegisterValue, bRegisterValue)
+          cpu.setRegister(aRegisterIndex, newRegisterValue)
+        },
+      },
+
+      MOV : {
+        regex: /ADD\s+R(\d+)\s*,\s*R(\d+)/g,
+        execute(input, cpu){
+          let aRegisterIndex = Number(this.regex.exec(input)[1])
+
+          this.regex.lastIndex = 0
+          let bRegisterIndex = Number(this.regex.exec(input)[2])
+
+          let aRegisterValue = cpu.registers[aRegisterIndex]
+          let bRegisterValue = cpu.registers[bRegisterIndex]
+
+          let newRegisterValue = cpu.alu.add(aRegisterValue, bRegisterValue)
+          cpu.setRegister(aRegisterIndex, newRegisterValue)
+        },
+      },
 
     }
   }
