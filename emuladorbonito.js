@@ -89,25 +89,19 @@ class FullAdder{
 }
 
 class Alu{
-  constructor(){
-    this.fullAdders = []
-    this.initializeFullAdders()
-  }
 
-  initializeFullAdders(){
-    for(var i = 0; i < WORD_SIZE; i++){
-      this.fullAdders[i] = new FullAdder()
-    }
+  constructor(){
+    this.fullAdder = new FullAdder()
   }
 
   add(a,b){
     var result = ''
     var actualCarry  = 0
     for(var i = WORD_SIZE - 1 ; i >= 0; i--){
-      this.fullAdders[i].carry = actualCarry
-      this.fullAdders[i].add(a[i], b[i])
-      result = String(this.fullAdders[i].sum) + result
-      actualCarry = this.fullAdders[i].carry
+      this.fullAdder.carry = actualCarry
+      this.fullAdder.add(a[i], b[i])
+      result = String(this.fullAdder.sum) + result
+      actualCarry = this.fullAdder.carry
     }
     return result;
   }
@@ -116,10 +110,18 @@ class Alu{
     var result = ''
     var actualCarry  = 0
     for(var i = WORD_SIZE - 1 ; i >= 0; i--){
-      this.fullAdders[i].carry = actualCarry
-      this.fullAdders[i].sub(a[i], b[i])
-      result = String(this.fullAdders[i].substraction) + result
-      actualCarry = this.fullAdders[i].carry
+      this.fullAdder.carry = actualCarry
+      this.fullAdder.sub(a[i], b[i])
+      result = String(this.fullAdder.substraction) + result
+      actualCarry = this.fullAdder.carry
+    }
+    return result;
+  }
+
+  inverse(a){
+    var result = ''
+    for(var i = WORD_SIZE - 1 ; i >= 0; i--){
+      result = String(not(a[i])) + result
     }
     return result;
   }
@@ -149,6 +151,16 @@ class Cpu{
           let registerIndex = Number(this.regex.exec(input)[1])
           let register = cpu.registers[registerIndex]
           let registerValue  = cpu.alu.add(register, decimalToBinary(1))
+          cpu.setRegister(registerIndex, registerValue)
+        }
+      },
+
+      INV :  {
+        regex: /INV\s+R(\d+)/g,
+        execute(input, cpu){
+          let registerIndex = Number(this.regex.exec(input)[1])
+          let register = cpu.registers[registerIndex]
+          let registerValue = cpu.alu.inverse(register)
           cpu.setRegister(registerIndex, registerValue)
         }
       },

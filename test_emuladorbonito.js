@@ -191,7 +191,6 @@ describe("Full Adder", function(){
     fullAdder.sub(1,1)
     assert.equal(fullAdder.substraction, 1);
     assert.equal(fullAdder.carry, 1);
-
   });
 });
 
@@ -214,6 +213,14 @@ describe("Alu", function(){
     assert.equal(alu.sub("00000010111011110000010101010111","00000001011000001101010010110011"),"00000001100011100011000010100100")
     assert.equal(alu.sub("11111111111111111111111111111111","00000000000000000000000000000001"),"11111111111111111111111111111110")
     assert.equal(alu.sub("00000000000000000000000000000000","00000000000000000000000000000001"),"11111111111111111111111111111111")
+  });
+
+
+  it("Inverse numbers", function(){
+    assert.equal(alu.inverse("00000000000000000000000000000000"),"11111111111111111111111111111111")
+    assert.equal(alu.inverse("00000000000000000000000000000111"),"11111111111111111111111111111000")
+    assert.equal(alu.inverse("00111000000000000000000000000000"),"11000111111111111111111111111111")
+
   });
 });
 
@@ -242,5 +249,17 @@ describe("CPU", function(){
     assert.equal(cpu.registers[5],  '00000000000000000000000000000001')
     assert.equal(cpu.registers[40], '00000000000000000000000000000001')
     assert.equal(cpu.registers[42], '00000000000000000000000000000001')
+  });
+
+  it("Instruction INV",function(){
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["INV R00",
+                           "INV R05",
+                           "INV R40",
+                           "INV R42"])
+    assert.equal(cpu.registers[0],  '11111111111111111111111111111111')
+    assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
+    assert.equal(cpu.registers[40], '11111111111111111111111111111111')
+    assert.equal(cpu.registers[42], '11111111111111111111111111111111')
   });
 });
