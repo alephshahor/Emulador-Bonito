@@ -28,44 +28,45 @@ describe('Half Adder', function(){
   })
 
   it("Primitive or function", function(){
-    assert.equal(halfAdder.or('0','0'), 0)
-    assert.equal(halfAdder.or('0','1'), 1)
-    assert.equal(halfAdder.or('1','0'), 1)
-    assert.equal(halfAdder.or('1','1'), 1)
+    assert.equal(emuladorBonito.or('0','0'), 0)
+    assert.equal(emuladorBonito.or('0','1'), 1)
+    assert.equal(emuladorBonito.or('1','0'), 1)
+    assert.equal(emuladorBonito.or('1','1'), 1)
   });
 
   it("Primitive and function", function(){
-    assert.equal(halfAdder.and('0','0'), 0)
-    assert.equal(halfAdder.and('0','1'), 0)
-    assert.equal(halfAdder.and('1','0'), 0)
-    assert.equal(halfAdder.and('1','1'), 1)
+    assert.equal(emuladorBonito.and('0','0'), 0)
+    assert.equal(emuladorBonito.and('0','1'), 0)
+    assert.equal(emuladorBonito.and('1','0'), 0)
+    assert.equal(emuladorBonito.and('1','1'), 1)
   });
 
   it("Primitive not function", function(){
-    assert.equal(halfAdder.not('1'), 0)
-    assert.equal(halfAdder.not('0'), 1)
+    assert.equal(emuladorBonito.not('1'), 0)
+    assert.equal(emuladorBonito.not('0'), 1)
   });
 
   it("Primitive nand function", function(){
-    assert.equal(halfAdder.nand('0','0'), 1)
-    assert.equal(halfAdder.nand('0','1'), 1)
-    assert.equal(halfAdder.nand('1','0'), 1)
-    assert.equal(halfAdder.nand('1','1'), 0)
+    assert.equal(emuladorBonito.nand('0','0'), 1)
+    assert.equal(emuladorBonito.nand('0','1'), 1)
+    assert.equal(emuladorBonito.nand('1','0'), 1)
+    assert.equal(emuladorBonito.nand('1','1'), 0)
   });
 
   it("Primitive xor function", function(){
-    assert.equal(halfAdder.xor('0','0'), 0)
-    assert.equal(halfAdder.xor('0','1'), 1)
-    assert.equal(halfAdder.xor('1','0'), 1)
-    assert.equal(halfAdder.xor('1','1'), 0)
+    assert.equal(emuladorBonito.xor('0','0'), 0)
+    assert.equal(emuladorBonito.xor('0','1'), 1)
+    assert.equal(emuladorBonito.xor('1','0'), 1)
+    assert.equal(emuladorBonito.xor('1','1'), 0)
   });
 
   it("Primitive xpecialDoor function", function(){
-    assert.equal(halfAdder.xpecialDoor('0','0'), 0)
-    assert.equal(halfAdder.xpecialDoor('0','1'), 1)
-    assert.equal(halfAdder.xpecialDoor('1','0'), 0)
-    assert.equal(halfAdder.xpecialDoor('1','1'), 0)
+    assert.equal(emuladorBonito.xpecialDoor('0','0'), 0)
+    assert.equal(emuladorBonito.xpecialDoor('0','1'), 1)
+    assert.equal(emuladorBonito.xpecialDoor('1','0'), 0)
+    assert.equal(emuladorBonito.xpecialDoor('1','1'), 0)
   });
+
 
   it("Add function", function(){
 
@@ -106,6 +107,5 @@ describe('Half Adder', function(){
     assert.equal(halfAdder.carry, 0)
 
   });
-
 
 });
