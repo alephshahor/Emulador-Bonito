@@ -184,6 +184,13 @@ class Cpu{
         }
       },
 
+      NOP : {
+        regex: /NOP\s*/g,
+        execute(input, cpu){
+
+        }
+      }
+
     }
   }
 

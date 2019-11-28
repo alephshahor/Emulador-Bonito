@@ -289,4 +289,19 @@ describe("CPU", function(){
     assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
   });
 
+  it("Instruction NOP", function(){
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["INV R00",
+                           "NOP",
+                           "INV R05",
+                           "NOP",
+                           "INV R40",
+                           "NOP",
+                           "INV R42"])
+    assert.equal(cpu.registers[0],  '11111111111111111111111111111111')
+    assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
+    assert.equal(cpu.registers[40], '11111111111111111111111111111111')
+    assert.equal(cpu.registers[42], '11111111111111111111111111111111')
+  })
+
 });
