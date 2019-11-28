@@ -272,4 +272,21 @@ describe("CPU", function(){
     assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
   });
 
+  it("Instruction JZ",function(){
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["JZ 3",
+                           "INV R00",
+                           "INV R05"])
+    assert.equal(cpu.registers[0],  '00000000000000000000000000000000')
+    assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.registers[0] = emuladorBonito.decimalToBinary(1)
+    cpu.processSubroutine(["JZ 3",
+                           "INV R00",
+                           "INV R05"])
+    assert.equal(cpu.registers[0],  '11111111111111111111111111111110')
+    assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
+  });
+
 });

@@ -140,18 +140,18 @@ class Cpu{
         regex: /DEC\s+R(\d+)/g,
         execute(input, cpu){
           let registerIndex = Number(this.regex.exec(input)[1])
-          let register = cpu.registers[registerIndex]
-          let registerValue  = cpu.alu.sub(register, decimalToBinary(1))
-          cpu.setRegister(registerIndex, registerValue)
+          let registerValue = cpu.registers[registerIndex]
+          let newRegisterValue  = cpu.alu.sub(registerValue, decimalToBinary(1))
+          cpu.setRegister(registerIndex, newRegisterValue)
         }
       },
       INC : {
         regex: /INC\s+R(\d+)/g,
         execute(input, cpu){
           let registerIndex = Number(this.regex.exec(input)[1])
-          let register = cpu.registers[registerIndex]
-          let registerValue  = cpu.alu.add(register, decimalToBinary(1))
-          cpu.setRegister(registerIndex, registerValue)
+          let registerValue = cpu.registers[registerIndex]
+          let newRegisterValue  = cpu.alu.add(registerValue, decimalToBinary(1))
+          cpu.setRegister(registerIndex, newRegisterValue)
         }
       },
 
@@ -159,9 +159,9 @@ class Cpu{
         regex: /INV\s+R(\d+)/g,
         execute(input, cpu){
           let registerIndex = Number(this.regex.exec(input)[1])
-          let register = cpu.registers[registerIndex]
-          let registerValue = cpu.alu.inverse(register)
-          cpu.setRegister(registerIndex, registerValue)
+          let registerValue = cpu.registers[registerIndex]
+          let newRegisterValue = cpu.alu.inverse(registerValue)
+          cpu.setRegister(registerIndex, newRegisterValue)
         }
       },
 
@@ -170,6 +170,17 @@ class Cpu{
         execute(input, cpu){
           let instructionIndex = Number(this.regex.exec(input)[1])
           cpu.programCounter = instructionIndex - 2
+        }
+      },
+
+      JZ :  {
+        regex: /JZ\s+(\d+)/g,
+        execute(input, cpu){
+          let instructionIndex = Number(this.regex.exec(input)[1])
+          let registerValue = cpu.registers[0]
+          if(registerValue == decimalToBinary(0)){
+            cpu.programCounter = instructionIndex - 2
+          }
         }
       },
 
