@@ -37,7 +37,7 @@ function not(a){
 
  */
 
-function xpecialDoor(a,b){
+function xpecialGate(a,b){
   return and(not(a),b)
 }
 
@@ -48,6 +48,7 @@ class HalfAdder{
   constructor(){
     this.carry = 0
     this.sum = 0
+    this.substraction = 0
   }
 
   add(a,b){
@@ -56,8 +57,8 @@ class HalfAdder{
   }
 
   sub(a,b){
-      this.sum = xor(a,b)
-      this.carry = xpecialDoor(a,b)
+      this.substraction = xor(a,b)
+      this.carry = xpecialGate(a,b)
   }
 }
 
@@ -65,8 +66,30 @@ class FullAdder{
 
     constructor(){
       this.carry = 0
+      this.sum = 0
+      this.substraction = 0
       this.halfAdderA = new HalfAdder()
       this.halfAdderB = new HalfAdder()
+    }
+
+    reset(){
+      this.carry = 0
+      this.sum = 0
+      this.substraction = 0
+    }
+
+    add(a,b){
+      this.halfAdderA.add(a,b)
+      this.halfAdderB.add(this.halfAdderA.sum, this.carry)
+      this.sum = this.halfAdderB.sum
+      this.carry = xor(this.halfAdderA.carry, this.halfAdderB.carry)
+    }
+
+    sub(a,b){
+      this.halfAdderA.sub(a,b)
+      this.halfAdderB.sub(this.halfAdderA.substraction, this.carry)
+      this.substraction = this.halfAdderB.substraction
+      this.carry = xor(this.halfAdderA.carry, this.halfAdderB.carry)
     }
 
 
@@ -100,6 +123,7 @@ module.exports = {
   not,
   xor,
   nand,
-  xpecialDoor,
-  HalfAdder
+  xpecialGate,
+  HalfAdder,
+  FullAdder
 }

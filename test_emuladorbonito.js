@@ -60,11 +60,11 @@ describe('Half Adder', function(){
     assert.equal(emuladorBonito.xor('1','1'), 0)
   });
 
-  it("Primitive xpecialDoor function", function(){
-    assert.equal(emuladorBonito.xpecialDoor('0','0'), 0)
-    assert.equal(emuladorBonito.xpecialDoor('0','1'), 1)
-    assert.equal(emuladorBonito.xpecialDoor('1','0'), 0)
-    assert.equal(emuladorBonito.xpecialDoor('1','1'), 0)
+  it("Primitive xpecialGate function", function(){
+    assert.equal(emuladorBonito.xpecialGate('0','0'), 0)
+    assert.equal(emuladorBonito.xpecialGate('0','1'), 1)
+    assert.equal(emuladorBonito.xpecialGate('1','0'), 0)
+    assert.equal(emuladorBonito.xpecialGate('1','1'), 0)
   });
 
 
@@ -91,21 +91,106 @@ describe('Half Adder', function(){
   it("Sub function", function(){
 
     halfAdder.sub(0,0)
-    assert.equal(halfAdder.sum, 0)
+    assert.equal(halfAdder.substraction, 0)
     assert.equal(halfAdder.carry, 0)
 
     halfAdder.sub(1,0)
-    assert.equal(halfAdder.sum, 1)
+    assert.equal(halfAdder.substraction, 1)
     assert.equal(halfAdder.carry, 0)
 
     halfAdder.sub(0,1)
-    assert.equal(halfAdder.sum, 1)
+    assert.equal(halfAdder.substraction, 1)
     assert.equal(halfAdder.carry, 1)
 
     halfAdder.sub(1,1)
-    assert.equal(halfAdder.sum, 0)
+    assert.equal(halfAdder.substraction, 0)
     assert.equal(halfAdder.carry, 0)
 
   });
 
+});
+
+describe("Full Adder", function(){
+  fullAdder = new emuladorBonito.FullAdder()
+  it("Add function", function(){
+    fullAdder.add(0,0)
+    assert.equal(fullAdder.sum, 0);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.add(0,1)
+    assert.equal(fullAdder.sum, 1);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.add(1,0)
+    assert.equal(fullAdder.sum, 1);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.add(1,1)
+    assert.equal(fullAdder.sum, 0);
+    assert.equal(fullAdder.carry, 1);
+
+    fullAdder.carry = 1
+    fullAdder.add(0,0)
+    assert.equal(fullAdder.sum, 1);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.carry = 1
+    fullAdder.add(0,1)
+    assert.equal(fullAdder.sum, 0);
+    assert.equal(fullAdder.carry, 1);
+
+    fullAdder.carry = 1
+    fullAdder.add(1,0)
+    assert.equal(fullAdder.sum, 0);
+    assert.equal(fullAdder.carry, 1);
+
+    fullAdder.carry = 1
+    fullAdder.add(1,1)
+    assert.equal(fullAdder.sum, 1);
+    assert.equal(fullAdder.carry, 1);
+  });
+
+  it("Sub function", function(){
+
+    fullAdder.reset()
+    fullAdder.sub(0,0)
+    assert.equal(fullAdder.substraction, 0);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.reset()
+    fullAdder.sub(0,1)
+    assert.equal(fullAdder.substraction, 1);
+    assert.equal(fullAdder.carry, 1);
+
+    fullAdder.reset()
+    fullAdder.sub(1,0)
+    assert.equal(fullAdder.substraction, 1);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.reset()
+    fullAdder.sub(1,1)
+    assert.equal(fullAdder.substraction, 0);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.carry = 1
+    fullAdder.sub(0,0)
+    assert.equal(fullAdder.substraction, 1);
+    assert.equal(fullAdder.carry, 1);
+
+    fullAdder.carry = 1
+    fullAdder.sub(0,1)
+    assert.equal(fullAdder.substraction, 0);
+    assert.equal(fullAdder.carry, 1);
+
+    fullAdder.carry = 1
+    fullAdder.sub(1,0)
+    assert.equal(fullAdder.substraction, 0);
+    assert.equal(fullAdder.carry, 0);
+
+    fullAdder.carry = 1
+    fullAdder.sub(1,1)
+    assert.equal(fullAdder.substraction, 1);
+    assert.equal(fullAdder.carry, 1);
+
+  });
 });
