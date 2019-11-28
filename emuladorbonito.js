@@ -35,6 +35,21 @@ function xpecialGate(a,b){
   return and(not(a),b)
 }
 
+function decimalToBinary(decimalNumber){
+  incompleteBinaryNumber = parseInt(decimalNumber, 10).toString(2)
+  completeBinaryNumber = appendZeroes(incompleteBinaryNumber)
+  return completeBinaryNumber
+}
+
+function appendZeroes(incompleteBinaryNumber){
+  numberOfRemainingZeroes = WORD_SIZE - incompleteBinaryNumber.length
+  remainingZeroes = ''
+  for(var i = 0; i < numberOfRemainingZeroes; i++){
+    remainingZeroes = '0' + remainingZeroes
+  }
+  return remainingZeroes + incompleteBinaryNumber
+}
+
 class HalfAdder{
   constructor(){
     this.carry = 0
@@ -240,6 +255,11 @@ class Cpu{
     this.registers[registerIndex] = registerValue
   }
 
+  result(){
+    let resultValue = this.registers[N_REGISTERS -1]
+    return parseInt(resultValue,2).toString(10)
+  }
+
   initializeRegisters(){
     for(var i = 0; i < N_REGISTERS; i++){
       this.registers[i] = decimalToBinary(0)
@@ -260,28 +280,12 @@ class Cpu{
       }
       this.programCounter += 1
     }
-    // console.log(this.registers)
+    return this.result()
   }
 
-}
 
-function decimalToBinary(decimalNumber){
-  incompleteBinaryNumber = parseInt(decimalNumber, 10).toString(2)
-  completeBinaryNumber = appendZeroes(incompleteBinaryNumber)
-  return completeBinaryNumber
-}
 
-function appendZeroes(incompleteBinaryNumber){
-  numberOfRemainingZeroes = WORD_SIZE - incompleteBinaryNumber.length
-  remainingZeroes = ''
-  for(var i = 0; i < numberOfRemainingZeroes; i++){
-    remainingZeroes = '0' + remainingZeroes
-  }
-  return remainingZeroes + incompleteBinaryNumber
 }
-
-// cpu = new Cpu()
-// cpu.processSubroutine(["DEC R42"])
 
 
 module.exports = {

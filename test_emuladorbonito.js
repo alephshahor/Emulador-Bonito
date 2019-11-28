@@ -368,4 +368,68 @@ describe("CPU", function(){
 
   });
 
+  it("Programs returns R42 value", function(){
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.registers[4] = emuladorBonito.decimalToBinary(9931234)
+    assert.equal(cpu.processSubroutine(["MOV 9931234, R04",
+                                        "MOV R04, R42"]), '9931234')
+
+  });
+
+});
+
+describe("Program examples", function(){
+  it("Test 1", function(){
+       cpu = new emuladorBonito.Cpu()
+       assert.equal(cpu.processSubroutine(["MOV 5,R00",
+                                           "MOV 10,R01",
+                                           "JZ 7",
+                                           "ADD R02,R01",
+                                           "DEC R00",
+                                           "JMP 3",
+                                           "MOV R02,R42"]), "50")
+   });
+
+   it("Test 2", function(){
+        cpu = new emuladorBonito.Cpu()
+        assert.equal(cpu.processSubroutine(["MOV 32,R00",
+                                            "MOV 1,R41",
+                                            "JZ 8",
+                                            "MOV R41,R42",
+                                            "ADD R41,R42",
+                                            "DEC R00",
+                                            "JMP 3",
+                                            "NOP"]), "2147483648")
+    });
+
+    it("Test 3", function(){
+         cpu = new emuladorBonito.Cpu()
+         assert.equal(cpu.processSubroutine(["MOV 32,R00",
+                                             "MOV 1,R41",
+                                             "JZ 7",
+                                             "ADD R41,R41",
+                                             "DEC R00",
+                                             "JMP 3",
+                                             "NOP",
+                                             "MOV R41,R42"]), "0")
+     });
+
+     it("Test 4", function(){
+          cpu = new emuladorBonito.Cpu()
+          assert.equal(cpu.processSubroutine(["INV R41",
+                                             "ADD R42,R41"]), "4294967295")
+      });
+
+      it("Test 5", function(){
+           cpu = new emuladorBonito.Cpu()
+           assert.equal(cpu.processSubroutine(["DEC R42",
+                                               "INC R01",
+                                               "ADD R02,R01",
+                                               "ADD R00,R02",
+                                               "ADD R00,R42",
+                                               "JZ 1"]), "4294967294")
+       });
+
+
 });
