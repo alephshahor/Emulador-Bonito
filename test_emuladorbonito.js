@@ -330,4 +330,20 @@ describe("CPU", function(){
 
   });
 
+  it("Instruction MOV_NUM", function(){
+
+    cpu = new emuladorBonito.Cpu()
+    cpu.registers[2] = emuladorBonito.decimalToBinary(1560)
+    cpu.registers[3] = emuladorBonito.decimalToBinary(11277917)
+    cpu.registers[4] = emuladorBonito.decimalToBinary(9931234)
+    cpu.processSubroutine(["MOV 1560, R02",
+                           "MOV 11277917, R03",
+                           "MOV 9931234, R04"])
+
+    assert.equal(cpu.registers[2],  '00000000000000000000011000011000')
+    assert.equal(cpu.registers[3],  '00000000101011000001011001011101')
+    assert.equal(cpu.registers[4],  '00000000100101111000100111100010')
+
+  });
+
 });
