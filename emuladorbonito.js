@@ -1,5 +1,16 @@
+/*
+  Autor: Adrián Álvarez León
+  e-mail: alu0101028163@ull.edu.es
+*/
+
 const WORD_SIZE = 32
 const N_REGISTERS = 43
+
+
+/* Nuestras entradas son cadenas pero las operaciones a nivel de bits
+no operan con caracteres asi que los convertimos a numeros. Será una vez
+calculadas las operaciones cuando volverán a ser convertidos los resultados
+a string.*/
 
 function or(a,b){
   return Number(a) || Number(b)
@@ -49,6 +60,7 @@ function appendZeroes(incompleteBinaryNumber){
   }
   return remainingZeroes + incompleteBinaryNumber
 }
+
 
 class HalfAdder{
   constructor(){
@@ -103,6 +115,13 @@ class FullAdder{
 
 }
 
+/*
+Para poder realizar las operaciones aritméticas en binario he implementado una
+Unidad Aritmetico-Lógica compuesta por un 2-bit Full Adder (Aunque deberían de ser
+32 2-bit Full-Adder o 1 2-bit Half-Adder y 31 2-bit Full Adder considero que
+para las circustancias de lo que se pide sería un gasto de memoria innecesario).
+*/
+
 class Alu{
 
   constructor(){
@@ -143,6 +162,13 @@ class Alu{
 
 }
 
+/*
+  La Cpu es muy sencilla, simplemente se ha implementado un Program Counter,
+  una ALU, los registros y un conjunto de instrucciones. El conjunto de instru-
+  cciones no es más que un objeto que contiene una expresión regular para buscar
+  coincidencias con las instrucciones de entrada y una función que equivale a su
+  implementación.
+*/
 class Cpu{
 
   constructor(){
@@ -282,8 +308,6 @@ class Cpu{
     }
     return this.result()
   }
-
-
 
 }
 
