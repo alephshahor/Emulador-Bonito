@@ -1,3 +1,6 @@
+const WORD_SIZE = 32
+
+
 function or(a,b){
   return Number(a) || Number(b)
 }
@@ -22,19 +25,10 @@ function not(a){
 }
 
 /*
-
  Como nuestra arquitectura no permite numeros negativos pero sin embargo
  queremos realizar decrementos, he implementado esta puerta muy sencilla
  para que se pueda restar sin tener que pasar a ningún complemento usando
  los half adder.
-
- Su tabla de verdad sería:
- a | b | carry | sum
- 0 | 0 |   0   |  0
- 0 | 1 |   1   |  1
- 1 | 0 |   0   |  1
- 1 | 1 |   0   |  0
-
  */
 
 function xpecialGate(a,b){
@@ -97,7 +91,44 @@ class FullAdder{
 
 }
 
-WORD_SIZE = 32
+class Alu{
+  constructor(){
+    this.fullAdders = []
+    this.initializeFullAdders()
+  }
+
+  initializeFullAdders(){
+    for(var i = 0; i < WORD_SIZE; i++){
+      this.fullAdders[i] = new FullAdder()
+    }
+  }
+
+  add(a,b){
+    var result = ''
+    var actualCarry  = 0
+    for(var i = WORD_SIZE - 1 ; i >= 0; i--){
+      this.fullAdders[i].carry = actualCarry
+      this.fullAdders[i].add(a[i], b[i])
+      result = String(this.fullAdders[i].sum) + result
+      actualCarry = this.fullAdders[i].carry
+    }
+    return result;
+  }
+
+  sub(a,b){
+    var result = ''
+    var actualCarry  = 0
+    for(var i = WORD_SIZE - 1 ; i >= 0; i--){
+      this.fullAdders[i].carry = actualCarry
+      this.fullAdders[i].sub(a[i], b[i])
+      result = String(this.fullAdders[i].substraction) + result
+      actualCarry = this.fullAdders[i].carry
+    }
+    return result;
+  }
+
+}
+
 
 function decimalToBinary(decimalNumber){
   incompleteBinaryNumber = parseInt(decimalNumber, 10).toString(2)
@@ -115,6 +146,7 @@ function appendZeroes(incompleteBinaryNumber){
 }
 
 
+
 module.exports = {
   decimalToBinary,
   appendZeroes,
@@ -125,5 +157,6 @@ module.exports = {
   nand,
   xpecialGate,
   HalfAdder,
-  FullAdder
+  FullAdder,
+  Alu
 }
