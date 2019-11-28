@@ -165,6 +165,14 @@ class Cpu{
         }
       },
 
+      JMP :  {
+        regex: /JMP\s+(\d+)/g,
+        execute(input, cpu){
+          let instructionIndex = Number(this.regex.exec(input)[1])
+          cpu.programCounter = instructionIndex - 2
+        }
+      },
+
     }
   }
 

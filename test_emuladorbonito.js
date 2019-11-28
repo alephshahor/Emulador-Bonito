@@ -262,4 +262,14 @@ describe("CPU", function(){
     assert.equal(cpu.registers[40], '11111111111111111111111111111111')
     assert.equal(cpu.registers[42], '11111111111111111111111111111111')
   });
+
+  it("Instruction JMP",function(){
+    cpu = new emuladorBonito.Cpu()
+    cpu.processSubroutine(["JMP 3",
+                           "INV R00",
+                           "INV R05"])
+    assert.equal(cpu.registers[0],  '00000000000000000000000000000000')
+    assert.equal(cpu.registers[5],  '11111111111111111111111111111111')
+  });
+
 });
