@@ -142,7 +142,17 @@ class Cpu{
           let registerValue  = cpu.alu.sub(register, decimalToBinary(1))
           cpu.setRegister(registerIndex, registerValue)
         }
-      }
+      },
+      INC : {
+        regex: /INC\s+R(\d+)/g,
+        execute(input, cpu){
+          let registerIndex = Number(this.regex.exec(input)[1])
+          let register = cpu.registers[registerIndex]
+          let registerValue  = cpu.alu.add(register, decimalToBinary(1))
+          cpu.setRegister(registerIndex, registerValue)
+        }
+      },
+
     }
   }
 
