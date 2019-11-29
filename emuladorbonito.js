@@ -235,10 +235,10 @@ class Cpu{
       ADD : {
         regex: /ADD\s+R(\d+)\s*,\s*R(\d+)/g,
         execute(input, cpu){
-          let aRegisterIndex = Number(this.regex.exec(input)[1])
 
-          this.regex.lastIndex = 0
-          let bRegisterIndex = Number(this.regex.exec(input)[2])
+          let match = this.regex.exec(input)
+          let aRegisterIndex = Number(match[1])
+          let bRegisterIndex = Number(match[2])
 
           let aRegisterValue = cpu.registers[aRegisterIndex]
           let bRegisterValue = cpu.registers[bRegisterIndex]
@@ -251,10 +251,10 @@ class Cpu{
       MOV_NUM : {
         regex: /MOV\s+(\d+)\s*,\s*R(\d+)/g,
         execute(input, cpu){
-          let numericalConstant = Number(this.regex.exec(input)[1])
 
-          this.regex.lastIndex = 0
-          let registerIndex = Number(this.regex.exec(input)[2])
+          let match = this.regex.exec(input)
+          let numericalConstant = Number(match[1])
+          let registerIndex = Number(match[2])
 
           cpu.setRegister(registerIndex, decimalToBinary(numericalConstant))
         },
@@ -263,10 +263,9 @@ class Cpu{
       MOV_REG : {
         regex: /MOV\s+R(\d+)\s*,\s*R(\d+)/g,
         execute(input, cpu){
-          let aRegisterIndex = Number(this.regex.exec(input)[1])
-
-          this.regex.lastIndex = 0
-          let bRegisterIndex = Number(this.regex.exec(input)[2])
+          let match = this.regex.exec(input)
+          let aRegisterIndex = Number(match[1])
+          let bRegisterIndex = Number(match[2])
 
           let aRegisterValue = cpu.registers[aRegisterIndex]
 
